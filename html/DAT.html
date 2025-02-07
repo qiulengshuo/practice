@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TAD</title>
+    </head>
+    <body>
+        <div style="width: 100px; height: 100px; background-color: red"></div>
+    </body>
+    <script>
+        const div = document.querySelector('div');
+
+        function debounce(fn, delay) {
+            let timer;
+            return function (...params) {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    fn.apply(this, ...params);
+                }, delay);
+            };
+        }
+
+        div.addEventListener(
+            'click',
+            debounce(function () {
+                console.log('click');
+            }, 2000),
+        );
+
+        function throttle(fn, delay) {
+            let timer;
+            return function (...params) {
+                if (timer) return;
+                timer = setTimeout(() => {
+                    timer = null;
+                    fn.apply(this, ...params);
+                }, delay);
+            };
+        }
+
+        div.addEventListener(
+            'click',
+            throttle(function () {
+                console.log('click');
+            }, 2000),
+        );
+    </script>
+</html>
