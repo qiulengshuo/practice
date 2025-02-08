@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>drag</title>
+    </head>
+    <body>
+        <div style="width: 100px; height: 100px; background-color: red; position: absolute; top: 0px; left: 0px">
+            <div id="123" style="width: 10px; height: 10px; background-color: blue"></div>
+        </div>
+    </body>
+    <script>
+        const div = document.querySelector('div');
+        let isMoving = false;
+        let xDiff = 0;
+        let yDiff = 0;
+        document.addEventListener('mousedown', (e) => {
+            if (e.target.nodeName !== 'DIV') return;
+            isMoving = true;
+            xDiff = e.clientX - div.style.left.substring(0, div.style.left.indexOf('px'));
+            yDiff = e.clientY - div.style.top.substring(0, div.style.top.indexOf('px'));
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!isMoving) return;
+            div.style.left = e.clientX - xDiff + 'px';
+            div.style.top = e.clientY - yDiff + 'px';
+        });
+        document.addEventListener('mouseup', (e) => {
+            isMoving = false;
+        });
+    </script>
+</html>
