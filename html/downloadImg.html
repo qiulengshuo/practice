@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>1</title>
+    </head>
+    <body></body>
+    <script>
+        const downloadImage = (url, imgName) => {
+            const img = document.createElement('img');
+            img.src = url;
+            img.setAttribute('crossOrigin', 'anonymous');
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const c = canvas.getContext('2d');
+                c.drawImage(img, 0, 0);
+                const a = document.createElement('a');
+                a.href = canvas.toDataURL('image/png');
+                a.download = imgName;
+                a.click();
+            };
+        };
+        downloadImage('https://ts1.cn.mm.bing.net/th?id=OIP-C.7wlJ_w0I_qj8VWG2KumLPwHaFj&w=156&h=185&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2', 'test.png');
+    </script>
+</html>

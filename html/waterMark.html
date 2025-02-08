@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div style="width: 500px; height: 500px"></div>
+    </body>
+    <script>
+        function addWaterMark(text) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 100;
+            canvas.height = 100;
+            const context = canvas.getContext('2d');
+            context.font = '13px 微软雅黑';
+            context.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.rotate((-30 * Math.PI) / 180);
+            context.fillText(text, 50, 50);
+            const div = document.querySelector('div');
+            div.style.backgroundImage = `url(${canvas.toDataURL()})`;
+            div.style.backgroundRepeat = 'repeat';
+        }
+        addWaterMark('test');
+    </script>
+</html>
