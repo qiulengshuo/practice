@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div style="width: 5rem; height: 5rem; background-color: #f4f0f0"></div>
+    </body>
+    <script>
+        function rem() {
+            const unit = document.documentElement.clientWidth / 10;
+            document.documentElement.style.fontSize = unit + 'px';
+        }
+        rem();
+        window.addEventListener('resize', rem);
+
+        function generateRem(px, uiWidth) {
+            const unit = document.documentElement.clientWidth / 10;
+            return ((px / uiWidth) * document.documentElement.clientWidth) / unit;
+        }
+        console.log(generateRem(375, 750));
+    </script>
+</html>
