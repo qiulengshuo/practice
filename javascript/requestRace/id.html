@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>requestRace</title>
+    </head>
+    <body>
+        <button data-id="1">1</button>
+        <button data-id="2">2</button>
+        <button data-id="3">3</button>
+        <div id="current"></div>
+        <div id="show"></div>
+    </body>
+    <script>
+        const show = document.querySelector('#show');
+        const current = document.querySelector('#current');
+        const btns = document.querySelectorAll('button');
+        let requestId;
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].addEventListener('click', () => {
+                requestId = i + 1;
+                let currentId = i + 1;
+                current.innerHTML = `当前请求第${i + 1}个`;
+                fetch(`http://127.0.0.1:9999/data?num=${btns[i].dataset.id}`).then(async (res) => {
+                    if (currentId !== requestId) return;
+                    const text = await res.text();
+                    show.innerHTML = text;
+                });
+            });
+        }
+    </script>
+</html>

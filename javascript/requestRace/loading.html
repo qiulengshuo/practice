@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>requestRace</title>
+    </head>
+    <body>
+        <button data-id="1">1</button>
+        <button data-id="2">2</button>
+        <button data-id="3">3</button>
+        <div id="current"></div>
+        <div id="show"></div>
+    </body>
+    <script>
+        const delay = (id) => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(`第 ${id} 个请求返回`);
+                }, Math.random() * 3000);
+            });
+        };
+        const show = document.querySelector('#show');
+        const current = document.querySelector('#current');
+        const btns = document.querySelectorAll('button');
+        let requestId;
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].addEventListener('click', () => {
+                requestId = i + 1;
+                let currentId = i + 1;
+                current.innerHTML = `当前请求第${i + 1}个`;
+                delay(btns[i].dataset.id).then((res) => {
+                    if (currentId !== requestId) return;
+                    show.innerHTML = res;
+                });
+            });
+        }
+    </script>
+</html>
